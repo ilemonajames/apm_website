@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { getCurrentMember, getD1 } from "@/lib/member-auth";
+export async function GET(request: Request) { const member = await getCurrentMember(); if (!member) return NextResponse.json({ error: "Sign in required." }, { status: 401 }); const url = new URL(request.url), parentId = url.searchParams.get("parentId"), type = url.searchParams.get("type"); if (!parentId || !["lga", "ward", "polling_unit"].includes(type ?? "")) return NextResponse.json({ items: [] }); const result = await getD1().prepare("SELECT id, code, name FROM inec_locations WHERE parent_id = ? AND type = ? ORDER BY name").bind(parentId, type).all(); return NextResponse.json({ items: result.results }); }

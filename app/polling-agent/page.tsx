@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { PollingAgentForm } from "@/components/polling-agent-form";
+import { getCurrentMember, getD1 } from "@/lib/member-auth";
+export const metadata: Metadata = { title: "Polling-agent applications" };
+export const dynamic = "force-dynamic";
+export default async function PollingAgentPage() { const member = await getCurrentMember(); if (!member) redirect("/membership/login"); const db = getD1(); const [elections, states] = await Promise.all([db.prepare("SELECT id, name FROM elections WHERE status = 'open' AND (application_deadline IS NULL OR application_deadline > ?) ORDER BY election_date").bind(Date.now()).all(), db.prepare("SELECT id, name, code FROM inec_locations WHERE type = 'state' ORDER BY name").all()]); return <main className="member-shell agent-shell"><section className="member-intro"><p className="eyebrow">Polling agents</p><h1>Apply for an election assignment.</h1><p>Only members with verified email and approved membership may apply. Selection and polling-unit allocation remain separate from submission.</p><ol><li><strong>1</strong><span>Select an open election</span></li><li><strong>2</strong><span>Choose a verified INEC location</span></li><li><strong>3</strong><span>Track the decision</span></li></ol></section><PollingAgentForm elections={elections.results as {id:string;name:string}[]} states={states.results as {id:string;name:string;code?:string}[]} /></main>; }

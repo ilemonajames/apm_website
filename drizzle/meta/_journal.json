@@ -8,6 +8,13 @@
       "when": 1790511781974,
       "tag": "0000_cool_proudstar",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790532233134,
+      "tag": "0001_free_redwing",
+      "breakpoints": true
     }
   ]
 }

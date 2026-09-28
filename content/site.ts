@@ -14,8 +14,8 @@ export const priorities = [
 ] as const;
 
 export const leaders = [
-  { name: "Yusuf Mamman Dantalle", role: "National Chairman", initials: "YD" },
-  { name: "Oyadeyi Ayodele Adebayo", role: "National Secretary", initials: "OA" },
+  { name: "Yusuf Mamman Dantalle", role: "National Chairman", initials: "YD", image: "/images/apm/yusuf-dantalle.jpg" },
+  { name: "Oyadeyi Ayodele Adebayo", role: "National Secretary", initials: "OA", image: "/images/apm/oyadeyi-adebayo.jpg" },
   { name: "Zavvalo Badon", role: "National Treasurer", initials: "ZB" },
   { name: "Labarin Yunusa", role: "National Financial Secretary", initials: "LY" },
 ] as const;
