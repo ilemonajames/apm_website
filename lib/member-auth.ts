@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { env } from "cloudflare:workers";
+import { getSqliteD1 } from "@/lib/sqlite-d1";
 
 export const SESSION_COOKIE = "apm_member_session";
 export const ACCESS_CODE_TTL_SECONDS = 10 * 60;
@@ -18,6 +19,7 @@ export async function hashSecret(value: string) {
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 export function getD1() {
+  if (process.env.APM_DB_PATH) return getSqliteD1(process.env.APM_DB_PATH);
   if (!env.DB) throw new Error("Membership services are temporarily unavailable.");
   return env.DB;
 }

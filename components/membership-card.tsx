@@ -1,0 +1,9 @@
+"use client";
+import { useEffect, useRef } from "react";
+type CardMember = { name: string; reference: string; state: string; ward: string; hasPhoto: boolean };
+export function MembershipCard({ member }: { member: CardMember }) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+  useEffect(() => { const context = canvas.current?.getContext("2d"); if (!context) return; context.fillStyle="#fff";context.fillRect(0,0,1012,638);context.fillStyle="#087541";context.fillRect(0,0,1012,112);context.fillRect(0,590,1012,48);context.fillStyle="#fff";context.font="700 38px Arial";context.fillText("ALLIED PEOPLES' MOVEMENT",42,68);context.font="700 20px Arial";context.fillText("MEMBERSHIP CARD",760,68);context.fillStyle="#10241b";context.font="700 42px Arial";context.fillText(member.name.toUpperCase(),330,240);context.font="700 19px Arial";context.fillStyle="#526158";context.fillText("MEMBERSHIP NUMBER",330,300);context.fillText("STATE",330,390);context.fillText("WARD",650,390);context.font="700 27px Arial";context.fillStyle="#10241b";context.fillText(member.reference,330,338);context.fillText(member.state||"Not provided",330,430);context.fillText(member.ward||"Not provided",650,430);context.strokeStyle="#dce5df";context.lineWidth=3;context.strokeRect(42,155,240,300);if(member.hasPhoto){const image=new Image();image.onload=()=>context.drawImage(image,42,155,240,300);image.src="/api/membership/photo";} },[member]);
+  function download(){const link=document.createElement("a");link.download=`${member.reference}-membership-card.png`;link.href=canvas.current?.toDataURL("image/png")??"";link.click();}
+  return <div className="membership-card-tool"><canvas ref={canvas} width="1012" height="638" aria-label="APM membership card preview"/><button className="button" onClick={download}>Download membership card</button></div>;
+}

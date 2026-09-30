@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { SiteLink as Link } from "@/components/site-link";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { searchIndex } from "@/content/public";
